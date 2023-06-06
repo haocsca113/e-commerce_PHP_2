@@ -1,0 +1,27 @@
+#sanpham
+{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#sanpham_noidung p
+{
+    margin: 0;
+}
+
+#sanpham_hinh
+{
+    width: 100%;
+}
+#sanpham_ten, #sanpham_mota
+{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#sanpham_gia
+{
+    font-size: 16px;
+    color:#F00;
+    font-weight: bold;
+}
