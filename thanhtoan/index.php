@@ -77,7 +77,7 @@
                         <tr>
                         <td>Tổng tiền:</td>
                         <td><label for="txttongtien"></label>
-                        <input type="text" name="txttongtien" id="txttongtien" size="50" value="<?php echo $tongtien ?>"/></td>
+                        <input type="text" name="txttongtien" id="txttongtien" size="50" value="<?php echo $tongtien .'$' ?>"/></td>
                         </tr>
                         <tr>
                         <td>Hình thức thanh toán:</td>
@@ -119,8 +119,8 @@
                                 </script>';
 
                             echo '<script language="javascript">
-                                window.location = "../index.php";
-                            </script>';
+                                    window.location = "../index.php";
+                                </script>';
                         }
                         else if($giaohang == '2'){
                             $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang')");

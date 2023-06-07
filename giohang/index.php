@@ -3,38 +3,7 @@ session_start();
 include("../class/clsadmin.php");
 $p = new admin();
 /*------------------------------ CODE PHP THÊM SẢN PHẨM VÀO GIỎ HÀNG ---------------------------------*/
-// if(isset($_POST['add_to_cart']))
-// {
-//     if(isset($_SESSION['id']) && isset($_SESSION['user']) && isset($_SESSION['pass']) && isset($_SESSION['phanquyen']) && isset($_SESSION['hodem']) && isset($_SESSION['ten']))
-//     {
-//         $tensp = $_REQUEST['tensp'];
-//         $gia = $_REQUEST['gia'];
-//         $hinh = $_REQUEST['hinh'];
-//         $soluong = $_REQUEST['soluong'];
-//         $id_sanpham = $_REQUEST['id_sanpham'];
-    
-    
-//         if($p->themxoasua("insert into giohang(tensp, gia, hinh, soluong, id_sanpham) values('$tensp', '$gia', '$hinh', '$soluong', '$id_sanpham')") == 1)
-//         {
-//             echo '<script language="javascript">
-//                     alert("Thêm vào giỏ thành công");
-//                 </script>';
-    
-//             echo '<script language="javascript">
-//                     window.location = "../giohang/";
-//                 </script>';
-//         }
-//     }
-//     else
-//     {
-//         echo '<script language="javascript">
-//                 alert("Bạn phải đăng nhập trước khi mua hàng");
-//             </script>';
-//         echo '<script language="javascript">
-//                 window.location = "../login/";
-//             </script>';
-//     }
-// }
+$id_taikhoan = $_SESSION['id'];
 
 if(isset($_POST['add_to_cart']))
 {
@@ -46,8 +15,7 @@ if(isset($_POST['add_to_cart']))
         $soluong = $_REQUEST['soluong'];
         $id_sanpham = $_REQUEST['id_sanpham'];
     
-    
-        if($p->themxoasua("insert into giohang(tensp, gia, hinh, soluong, id_sanpham) values('$tensp', '$gia', '$hinh', '$soluong', '$id_sanpham')") == 1)
+        if($p->themxoasua("insert into giohang(tensp, gia, hinh, soluong, id_sanpham, id_taikhoan) values('$tensp', '$gia', '$hinh', '$soluong', '$id_sanpham', '$id_taikhoan')") == 1)
         {
             echo '<script language="javascript">
                     alert("Thêm vào giỏ thành công");
@@ -56,13 +24,6 @@ if(isset($_POST['add_to_cart']))
             echo '<script language="javascript">
                     window.location = "../giohang/";
                 </script>';
-
-            $_SESSION['tensp'] = $tensp;
-            $_SESSION['gia'] = $gia;
-            $_SESSION['hinh'] = $hinh;
-            $_SESSION['soluong'] = $soluong;
-            $_SESSION['id_sanpham'] = $id_sanpham;
-
         }
     }
     else
@@ -149,14 +110,7 @@ if(isset($_POST['remove_from_cart']))
     <div class="container">
         <div class="row">
             <?php
-            if(isset($_SESSION['id']) && isset($_SESSION['user']) && isset($_SESSION['pass']) && isset($_SESSION['phanquyen']) && isset($_SESSION['hodem']) && isset($_SESSION['ten']))
-            {
-                if(isset($_SESSION['tensp']) && isset($_SESSION['gia']) && isset($_SESSION['hinh']) && isset($_SESSION['soluong']) && isset($_SESSION['id_sanpham']))
-                {
-                    $p->load_giohang("select * from giohang order by id asc");
-                }
-            }
-                
+                $p->load_giohang("select * from giohang where id_taikhoan='$id_taikhoan' order by id asc");
             ?>
         </div>
     </div>    
