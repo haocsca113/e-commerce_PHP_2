@@ -1,3 +1,10 @@
+<?php
+session_start();
+include("../../../class/clsadmin.php");
+$p = new admin();
+$id_taikhoan = $_REQUEST['id_taikhoan'];
+$id_donhang = $_REQUEST['id_donhang'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -478,6 +485,7 @@
       </div>
     </div>
 
+    <!------------------------ HIỂN THỊ CHI TIẾT HÓA ĐƠN  ---------------------------->
     <!-- Main content -->
     <section class="invoice">
       <!-- title row -->
@@ -485,7 +493,7 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <i class="fa fa-globe"></i> AdminLTE, Inc.
-            <small class="pull-right">Date: 2/10/2014</small>
+            <small class="pull-right">Date: 2023/06/07</small>
           </h2>
         </div>
         <!-- /.col -->
@@ -496,30 +504,33 @@
           From
           <address>
             <strong>Admin, Inc.</strong><br>
-            795 Folsom Ave, Suite 600<br>
-            San Francisco, CA 94107<br>
-            Phone: (804) 123-5432<br>
-            Email: info@almasaeedstudio.com
+            9800 Montgomery Blvd NE<br>
+            Albuquerque, NM<br>
+            Phone: 505-503-4455<br>
+            Email: adminsaul@gmail.com
           </address>
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
           To
           <address>
-            <strong>John Doe</strong><br>
-            795 Folsom Ave, Suite 600<br>
-            San Francisco, CA 94107<br>
-            Phone: (555) 539-1037<br>
-            Email: john.doe@example.com
+            <strong>
+              <?php 
+              echo $p->laycot("select hoten from donhang where id='$id_donhang'");
+              ?>
+            </strong><br>
+            <?php echo 'Address:'.' '.$p->laycot("select diachi from donhang where id='$id_donhang'"); ?><br>
+            <?php echo 'Phone:'.' '.$p->laycot("select SDT from donhang where id='$id_donhang'"); ?><br>
+            <?php echo 'Email:'.' '.$p->laycot("select email from donhang where id='$id_donhang'"); ?>
           </address>
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
-          <b>Invoice #007612</b><br>
+          <b>Invoice #<?php echo $id_donhang; ?></b><br>
           <br>
-          <b>Order ID:</b> 4F3S8J<br>
-          <b>Payment Due:</b> 2/22/2014<br>
-          <b>Account:</b> 968-34567
+          <b>Order ID:</b> <?php echo $id_donhang; ?><br>
+          <b>Date of Payment:</b> <?php echo $p->laycot("select order_date from donhang where id='$id_donhang'") ?><br>
+          <b>Account:</b> <?php echo $p->laycot("select username from taikhoan where id='$id_taikhoan'"); ?>
         </div>
         <!-- /.col -->
       </div>
@@ -628,6 +639,8 @@
       </div>
     </section>
     <!-- /.content -->
+    <!------------------------ END HIỂN THỊ CHI TIẾT HÓA ĐƠN  ---------------------------->
+
     <div class="clearfix"></div>
   </div>
   <!-- /.content-wrapper -->

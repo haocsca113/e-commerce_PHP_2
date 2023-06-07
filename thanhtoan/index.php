@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include("../class/clsadmin.php");
     $p = new admin();
 
@@ -101,6 +102,9 @@
 
                 <!--******************************* CODE PHP Đặt hàng ***********************************-->
                 <?php
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $id_taikhoan = $_SESSION['id'];
+
                 switch($_POST['nut'])
                 {
                     case 'Đặt hàng':
@@ -111,9 +115,12 @@
                         $email = $_REQUEST['txtemail'];
                         $tt = $_REQUEST['txttongtien'];
                         $giaohang = $_REQUEST['giaohang'];
+                        $date = date("y-m-d - H:i:s");
+
+                        // giaohang == 1 la nhan tien sau khi giao hang
                         if($giaohang == '1')
                         {
-                            $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang')");
+                            $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '$date', '$id_taikhoan')");
                             echo '<script language="javascript">
                                     alert("Đặt hàng thành công, đơn hàng đang chờ được xác nhận.");
                                 </script>';
@@ -122,8 +129,9 @@
                                     window.location = "../index.php";
                                 </script>';
                         }
+                        // giaohang == 2 la dat hang online
                         else if($giaohang == '2'){
-                            $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang')");
+                            $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '$date', '$id_taikhoan')");
                             header("Location: ../vnpay_php/");
                         }
                        
