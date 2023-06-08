@@ -603,12 +603,11 @@ $id_donhang = $_REQUEST['id_donhang'];
         <div class="col-xs-12">
           <button type="submit" name="chapnhandonhang" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Chấp Nhận Đơn Hàng
           </button>
+          <input type="hidden" name="id_donhang" id="" value='<?php echo $id_donhang ?>'>
         </div>
       </div>
     </section>
-    <?php
-      
-    ?>
+    
     </form>
     
     <!-- /.content -->

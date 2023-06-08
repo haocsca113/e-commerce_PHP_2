@@ -712,12 +712,13 @@ $p2 = new admin();
                 <table class="table no-margin">
                   <!----------------------- Code PHP XuatDonHang ------------------------>
                   <?php
-                    if(isset($_REQUEST['chapnhandonhang']))
+                    if(isset($_POST['chapnhandonhang']))
                     {
+                      $id_donhang = $_REQUEST['id_donhang'];
                       echo '<script language="javascript">
                             alert("Đơn hàng được chấp nhận. Đang chờ giao!");
                           </script>';
-                      $p2->themxoasua("update donhang set status='2'");
+                      $p2->themxoasua("update donhang set status='2' where id='$id_donhang'");
                     }
                     $p2->xuatdonhang("select * from donhang order by id asc");
                   ?>
