@@ -110,9 +110,8 @@ class tmdt
 				$soluong = $row['soluong'];
 				$tonggia = ($soluong * $gia);
 
-				echo '
-					<div class="col-md-12">
-						<form method="post" action="../giohang/?layid='.$id.'">
+				echo '<div class="col-md-12">
+						<form method="post" action="../giohang/">
 							<table class="table table-bordered table-striped">
 								<tr>
 									<th>STT</th>
@@ -123,6 +122,7 @@ class tmdt
 									<th>Tổng giá</th>
 									<th></th>
 								</tr>
+								
 								<tr>
 									<td>'.$dem.'</td>
 									<td>'.$tensp.'</td>
@@ -130,7 +130,9 @@ class tmdt
 									<td><img src="../hinh/'.$hinh.'" alt=""/ style="width:50px;"></td>
 									<td>'.$soluong.'</td>
 									<td>'.number_format($tonggia, 0, "", ".").' $</td>
-									<td><button name="remove_from_cart" class="btn btn-danger">Remove</button></td>
+									<td>	
+									<button name="remove_from_cart" class="btn btn-danger" value='.$id.'">Remove</button>
+									</td>
 								</tr>
 						
 					';
@@ -149,9 +151,9 @@ class tmdt
 					</tr>
 					';
 
-				echo '</form>
-					</div>
-					';
+				echo '</table>
+					</form>
+					</div>';
 
 				/********************* Form dùng để lấy tổng tiền hiện ở trang thanh toán **********************/
 				echo '<form action="../thanhtoan/" method="post">

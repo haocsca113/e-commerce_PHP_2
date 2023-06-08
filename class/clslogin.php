@@ -17,38 +17,6 @@ class login
 		}
 	}
 	
-	// public function mylogin($user, $pass)
-	// {
-	// 	$pass = md5($pass);
-	// 	$sql = "select id, username, password, phanquyen from taikhoan where username='$user' and password='$pass' limit 1";
-	// 	$link = $this->connect();
-	// 	$ketqua = mysql_query($sql, $link);
-	// 	$i = mysql_num_rows($ketqua);
-		
-	// 	if($i == 1)
-	// 	{
-	// 		while($row = mysql_fetch_array($ketqua))
-	// 		{
-	// 			$id = $row['id'];
-	// 			$username = $row['username'];
-	// 			$password = $row['password'];
-	// 			$phanquyen = $row['phanquyen'];
-	// 			session_start();
-	// 			$_SESSION['id'] = $id;
-	// 			$_SESSION['user'] = $username;
-	// 			$_SESSION['pass'] = $password;
-	// 			$_SESSION['phanquyen'] = $phanquyen;
-				
-	// 			header("Location: ../admin/");
-				
-	// 		}
-	// 	}
-	// 	else
-	// 	{
-	// 		echo 'Sai username hoặc password.';
-	// 	}
-	// }
-
 	public function mylogin($user, $pass)
 	{
 		$pass = md5($pass);

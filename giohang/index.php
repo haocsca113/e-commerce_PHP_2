@@ -42,17 +42,18 @@ if(isset($_POST['add_to_cart']))
 /*--------------------------------- CODE PHP XÓA SẢN PHẨM KHỎI GIỎ HÀNG ------------------------------------*/
 if(isset($_POST['remove_from_cart']))
 {
-    $layid = $_REQUEST['layid'];
-    if($p->themxoasua("delete from giohang where id = '$layid'") == 1)
-    {
-        echo '<script language="javascript">
-				alert("Xóa khỏi giỏ thành công");
-			</script>';
+        $idxoa = $_REQUEST['remove_from_cart'];
+        if($p->themxoasua("delete from giohang where id='$idxoa'") == 1)
+        {
+            echo '<script language="javascript">
+                    alert("Xóa khỏi giỏ thành công");
+                </script>';
 
-        echo '<script language="javascript">
-            window.location = "../giohang/";
-        </script>';
-    }
+            echo '<script language="javascript">
+                window.location = "../giohang/";
+            </script>';
+        }
+    
 }
 /*--------------------------------- END CODE PHP XÓA SẢN PHẨM VÀO GIỎ HÀNG ------------------------------------*/
 ?>
@@ -109,9 +110,11 @@ if(isset($_POST['remove_from_cart']))
     <!--*************************** LOAD GIỎ HÀNG *****************************-->
     <div class="container">
         <div class="row">
-            <?php
-                $p->load_giohang("select * from giohang where id_taikhoan='$id_taikhoan' order by id asc");
-            ?>
+            
+                <?php
+                    $p->load_giohang("select * from giohang where id_taikhoan='$id_taikhoan' order by id asc");
+                ?>
+            
         </div>
     </div>    
 

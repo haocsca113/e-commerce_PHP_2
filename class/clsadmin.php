@@ -125,6 +125,60 @@ class admin extends tmdt
 		return $giatri;
 	}
 
+	// public function xuatdonhang($sql)
+	// {
+	// 	$link = $this->connect();
+	// 	$ketqua = mysql_query($sql, $link);
+	// 	$i = mysql_num_rows($ketqua);
+	// 	if($i > 0)
+	// 	{
+	// 		echo '<thead>
+	// 				<tr>
+	// 				<th>Order ID</th>
+	// 				<th>Status</th>
+	// 				<th>Họ Tên</th>
+	// 				<th>Địa chỉ</th>
+	// 				<th>Hình thức giao hàng</th>
+	// 				</tr>
+	// 			</thead>
+	// 			<tbody>';
+	// 		while($row = mysql_fetch_array($ketqua))
+	// 		{
+				
+	// 			$id = $row['id'];
+	// 			$hoten = $row['hoten'];
+	// 			$diachi = $row['diachi'];
+	// 			$giaohang = $row['giaohang'];
+	// 			$id_taikhoan = $row['id_taikhoan'];
+				
+	// 			if($giaohang == 1)
+	// 			{
+	// 				$giaohang = 'Thanh toán khi nhận hàng';
+	// 			}
+	// 			else
+	// 			{
+	// 				$giaohang = 'Thanh toán online';
+	// 			}
+
+	// 			echo '<tr>
+	// 				<td><a href="pages/examples/invoice.php?id_donhang='.$id.'&id_taikhoan='.$id_taikhoan.'">'.$id.'</a></td>
+	// 				<td><span class="label label-info">Processing</span></td>
+	// 				<td>'.$hoten.'</td>
+	// 				<td>'.$diachi.'</td>
+	// 				<td>'.$giaohang.'</td>
+	// 				</tr>';
+	// 		}
+
+	// 		echo '</tbody>';
+	// 	}
+	// 	else
+	// 	{
+	// 		echo 'Chưa có đơn hàng nào!';
+	// 	}
+
+	// 	mysql_close();
+	// }
+
 	public function xuatdonhang($sql)
 	{
 		$link = $this->connect();
@@ -148,8 +202,10 @@ class admin extends tmdt
 				$id = $row['id'];
 				$hoten = $row['hoten'];
 				$diachi = $row['diachi'];
-				$id_taikhoan = $row['id_taikhoan'];
 				$giaohang = $row['giaohang'];
+				$status = $row['status'];
+				$id_taikhoan = $row['id_taikhoan'];
+				
 				if($giaohang == 1)
 				{
 					$giaohang = 'Thanh toán khi nhận hàng';
@@ -159,13 +215,27 @@ class admin extends tmdt
 					$giaohang = 'Thanh toán online';
 				}
 
-				echo '<tr>
-					<td><a href="pages/examples/invoice.php?id_donhang='.$id.'&id_taikhoan='.$id_taikhoan.'">'.$id.'</a></td>
-					<td><span class="label label-info">Processing</span></td>
-					<td>'.$hoten.'</td>
-					<td>'.$diachi.'</td>
-					<td>'.$giaohang.'</td>
-					</tr>';
+				if($status == 1)
+				{
+					echo '<tr>
+						<td><a href="pages/examples/invoice.php?id_donhang='.$id.'&id_taikhoan='.$id_taikhoan.'">'.$id.'</a></td>
+						<td><span class="label label-info">Processing</span></td>
+						<td>'.$hoten.'</td>
+						<td>'.$diachi.'</td>
+						<td>'.$giaohang.'</td>
+						</tr>';
+				}
+				else
+				{
+					echo '<tr>
+						<td><a href="pages/examples/invoice.php?id_donhang='.$id.'&id_taikhoan='.$id_taikhoan.'">'.$id.'</a></td>
+						<td><span class="label label-success">Shipping</span></td>
+						<td>'.$hoten.'</td>
+						<td>'.$diachi.'</td>
+						<td>'.$giaohang.'</td>
+						</tr>';
+				}
+				
 			}
 
 			echo '</tbody>';

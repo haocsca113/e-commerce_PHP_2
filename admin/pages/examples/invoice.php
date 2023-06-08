@@ -487,6 +487,7 @@ $id_donhang = $_REQUEST['id_donhang'];
 
     <!------------------------ HIỂN THỊ CHI TIẾT HÓA ĐƠN  ---------------------------->
     <!-- Main content -->
+    <form name="form1" action="../../../admin/" method="post">
     <section class="invoice">
       <!-- title row -->
       <div class="row">
@@ -567,7 +568,7 @@ $id_donhang = $_REQUEST['id_donhang'];
         </div>
         <!-- /.col -->
         <div class="col-xs-6">
-          <p class="lead">Amount Due 2/22/2014</p>
+          <p class="lead">Amount Due</p>
 
           <div class="table-responsive">
             <table class="table">
@@ -582,10 +583,6 @@ $id_donhang = $_REQUEST['id_donhang'];
                   ?>
                 </td>
               </tr>
-              <!-- <tr>
-                <th>Tax (9.3%)</th>
-                <td>$10.34</td>
-              </tr> -->
               <tr>
                 <th>Shipping:</th>
                 <td><?php echo $tienship.' $'; ?></td>
@@ -604,13 +601,16 @@ $id_donhang = $_REQUEST['id_donhang'];
       <!-- this row will not appear when printing -->
       <div class="row no-print">
         <div class="col-xs-12">
-      
-          <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Chấp Nhận Đơn Hàng
+          <button type="submit" name="chapnhandonhang" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Chấp Nhận Đơn Hàng
           </button>
-          
         </div>
       </div>
     </section>
+    <?php
+      
+    ?>
+    </form>
+    
     <!-- /.content -->
     <!------------------------ END HIỂN THỊ CHI TIẾT HÓA ĐƠN  ---------------------------->
 
