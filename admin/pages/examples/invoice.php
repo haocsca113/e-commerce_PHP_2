@@ -540,45 +540,11 @@ $id_donhang = $_REQUEST['id_donhang'];
       <div class="row">
         <div class="col-xs-12 table-responsive">
           <table class="table table-striped">
-            <thead>
-            <tr>
-              <th>Qty</th>
-              <th>Product</th>
-              <th>Serial #</th>
-              <th>Description</th>
-              <th>Subtotal</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>1</td>
-              <td>Call of Duty</td>
-              <td>455-981-221</td>
-              <td>El snort testosterone trophy driving gloves handsome</td>
-              <td>$64.50</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>Need for Speed IV</td>
-              <td>247-925-726</td>
-              <td>Wes Anderson umami biodiesel</td>
-              <td>$50.00</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>Monsters DVD</td>
-              <td>735-845-642</td>
-              <td>Terry Richardson helvetica tousled street art master</td>
-              <td>$10.70</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>Grown Ups Blue Ray</td>
-              <td>422-568-642</td>
-              <td>Tousled lomo letterpress</td>
-              <td>$25.99</td>
-            </tr>
-            </tbody>
+            <!-------------------------- CODE Xuat GioHang Cua User ----------------------------->
+            <?php
+              $p->xuatgiohangofuser("select * from giohang where id_taikhoan='$id_taikhoan'");
+            ?>
+            <!------------------------ END CODE Xuat GioHang Cua User ----------------------------->
           </table>
         </div>
         <!-- /.col -->
@@ -607,19 +573,26 @@ $id_donhang = $_REQUEST['id_donhang'];
             <table class="table">
               <tr>
                 <th style="width:50%">Subtotal:</th>
-                <td>$250.30</td>
+                <td>
+                  <?php 
+                    $tongtiencuadonhang = $p->laycot("select tongtien from donhang where id='$id_donhang'");
+                    $tienship = 5.8;
+                    $total = $tongtiencuadonhang + $tienship;
+                    echo $tongtiencuadonhang.' $';
+                  ?>
+                </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <th>Tax (9.3%)</th>
                 <td>$10.34</td>
-              </tr>
+              </tr> -->
               <tr>
                 <th>Shipping:</th>
-                <td>$5.80</td>
+                <td><?php echo $tienship.' $'; ?></td>
               </tr>
               <tr>
                 <th>Total:</th>
-                <td>$265.24</td>
+                <td><?php echo $total.' $'; ?></td>
               </tr>
             </table>
           </div>

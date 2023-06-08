@@ -177,5 +177,48 @@ class admin extends tmdt
 
 		mysql_close();
 	}
+
+	// Xuat gio hang cua tung user
+	public function xuatgiohangofuser($sql)
+	{
+		$link = $this->connect();
+		$ketqua = mysql_query($sql, $link);
+		$i = mysql_num_rows($ketqua);
+		if($i > 0)
+		{
+			echo '<thead>
+					<tr>
+					<th>Product</th>
+					<th>Gia</th>
+					<th>SoLuong</th>
+					<th>Subtotal</th>
+					</tr>
+				</thead>
+				<tbody>';
+			while($row = mysql_fetch_array($ketqua))
+			{
+				$id = $row['id'];
+				$tensp = $row['tensp'];
+				$gia = $row['gia'];
+				$soluong = $row['soluong'];
+				$tonggia = ($soluong * $gia);
+
+				echo '<tr>
+						<td>'.$tensp.'</td>
+						<td>'.$gia.' $</td>
+						<td>'.$soluong.'</td>
+						<td>'.$tonggia.' $</td>
+					</tr>';
+			}
+
+			echo '</tbody>';
+		}
+		else
+		{
+			echo 'Không có sản phẩm';
+		}
+
+		mysql_close();
+	}
 }
 ?>
