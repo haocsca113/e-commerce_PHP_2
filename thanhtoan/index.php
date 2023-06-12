@@ -131,7 +131,7 @@
                         }
                         // giaohang == 2 la dat hang online
                         else if($giaohang == '2'){
-                            $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')");
+                            $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')");
                             header("Location: ../vnpay_php/");
                         }
                        
