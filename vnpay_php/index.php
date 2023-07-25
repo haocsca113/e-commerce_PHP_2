@@ -25,7 +25,6 @@
             <div class="table-responsive">
             <!-- /vnpay_php/ -->
                 <form action="vnpay_create_payment.php" id="create_form" method="post">       
-
                     <div class="form-group">
                         <label for="language">Loại hàng hóa </label>
                         <select name="order_type" id="order_type" class="form-control">

@@ -1,14 +1,17 @@
 <?php
 session_start();
 include("../../class/clslogin.php");
-$p = new login();
+$p1 = new login();
 if(isset($_SESSION['id']) && isset($_SESSION['user']) && isset($_SESSION['pass']) && isset($_SESSION['phanquyen']))
 {
-	$p->confirmlogin($_SESSION['id'], $_SESSION['user'], $_SESSION['pass'], $_SESSION['phanquyen']);
+	$p1->confirmlogin($_SESSION['id'], $_SESSION['user'], $_SESSION['pass'], $_SESSION['phanquyen']);
 }
 else
 {
-	header("Location: ../../login/");
+	// header("Location: ../../login/");
+	// echo '<script language="javascript">
+	// 		window.location = "../../login/";
+	// 	</script>';
 }
 ?>
 
@@ -20,6 +23,10 @@ $p = new admin();
 if(isset($_REQUEST['layid']))
 {
 	$layid = $_REQUEST['layid'];
+}
+else
+{
+	$layid = 0;
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -66,9 +73,11 @@ if(isset($_REQUEST['layid']))
       <input type="file" name="myfile" id="myfile" /></td>
     </tr>
     <tr>
-      <td colspan="2" align="center" valign="middle"><input type="submit" name="nut" id="nut" value="Thêm sản phẩm" />
-        <input type="submit" name="nut" id="nut" value="Sửa sản phẩm" />
-      <input type="submit" name="nut" id="nut" value="Xóa sản phẩm" /></td>
+      <td colspan="2" align="center" valign="middle">
+		<input type="submit" name="nut1" id="nut1" value="Thêm sản phẩm" />
+        <input type="submit" name="nut2" id="nut2" value="Sửa sản phẩm" />
+      	<input type="submit" name="nut3" id="nut3" value="Xóa sản phẩm" />
+	</td>
     </tr>
   </table>
   <hr />
@@ -77,118 +86,114 @@ if(isset($_REQUEST['layid']))
   ?>
   
   <?php
-  switch($_POST['nut'])
-  {
-	  case 'Thêm sản phẩm':
-	  {
-		  $name = $_FILES['myfile']['name'];
-		  $type = $_FILES['myfile']['type'];
-		  $tmp_name = $_FILES['myfile']['tmp_name'];
-		  $ten = $_REQUEST['txtten'];
-		  $gia = $_REQUEST['txtgia'];
-		  $mota = $_REQUEST['txtmota'];
-		  $congty = $_REQUEST['congty'];
-		  
-		  if($type == 'image/jpeg')
-		  {
-			  $name = time()."_".$name;
-			  if($p->uphinh($name, "../../hinh", $tmp_name) == 1)
-			  {
-				  if($p->themxoasua("insert into sanpham(tensp, gia, mota, hinh, id_cty) values('$ten', '$gia', '$mota', '$name', '$congty')") == 1)
-				  {
-					  echo '<script language="javascript">
-					  			alert("Thêm sản phẩm thành công");
-					  		</script>';
-						
-					  echo '<script language="javascript">
-					  			window.location = "../qlsp/";
-					  		</script>';
-				  }
-				  else
-				  {
-					  echo 'Thêm ko thành công';
-				  }
-			  }
-			  else
-			  {
-				  echo 'Upload hình ko thành công';
-			  }
-		  }
-		  else
-		  {
-			  echo 'Yêu cầu upload file hình ảnh .jpg.';
-		  }
-		  
-		  break;
-	  }
-	  
-	  case 'Xóa sản phẩm':
-	  {
-		  $idxoa = $_REQUEST['txtidxoa'];
-		  if($idxoa > 0)
-		  {
-			  $hinh = $p->laycot("select hinh from sanpham where id = '$idxoa' limit 1");
-			  $vitri = "../../hinh/".$hinh;
-			  if(unlink($vitri))
-			  {
-				  if($p->themxoasua("delete from sanpham where id = '$idxoa' limit 1") == 1)
-				  {
-					  echo '<script language="javascript">
-					  			alert("Xóa sản phẩm thành công");
-					  		</script>';
-						
-					  echo '<script language="javascript">
-					  			window.location = "../qlsp/";
-					  		</script>';
-				  }
-				  else
-				  {
-					  echo 'Xóa sản phẩm ko thành công';
-				  }
-			  }
-			  else
-			  {
-				  echo 'Xóa hình ko thành công';
-			  }
-		  }
-		  else
-		  {
-			  echo 'Vui lòng chọn sản phẩm cần xóa';
-		  }
-		  break;
-	  }
-	  
-	  case 'Sửa sản phẩm':
-	  {
-		  $idsua = $_REQUEST['txtidxoa'];
-		  $ten = $_REQUEST['txtten'];
-		  $gia = $_REQUEST['txtgia'];
-		  $mota = $_REQUEST['txtmota'];
-		  $congty = $_REQUEST['congty'];
-		  if($idsua > 0)
-		  {
-				 if($p->themxoasua("update sanpham set tensp='$ten', gia='$gia', mota='$mota', id_cty='$congty' where id='$idsua' limit 1")==1)
-				 {
-					 echo '<script language="javascript">
-					  			alert("Sửa sản phẩm thành công");
-					  		</script>';
-						
-					  echo '<script language="javascript">
-					  			window.location = "../qlsp/";
-					  		</script>';
-				 }
-				 else
-				 {
-					 echo 'Sửa ko thành công';
-				 }
-		  }
-		  else
-		  {
-			  echo 'Vui lòng chọn sản phẩm cần sửa';
-		  }
-		  break;
-	  }
-  }
+	// Thêm sp
+	if(isset($_POST['nut1']))
+	{
+		$name = $_FILES['myfile']['name'];
+		$type = $_FILES['myfile']['type'];
+		$tmp_name = $_FILES['myfile']['tmp_name'];
+		$ten = $_REQUEST['txtten'];
+		$gia = $_REQUEST['txtgia'];
+		$mota = $_REQUEST['txtmota'];
+		$congty = $_REQUEST['congty'];
+		
+		if($type == 'image/jpeg')
+		{
+			$name = time()."_".$name;
+			if($p->uphinh($name, "../../hinh", $tmp_name) == 1)
+			{
+				if($p->themxoasua("insert into sanpham(tensp, gia, mota, hinh, id_cty) values('$ten', '$gia', '$mota', '$name', '$congty')") == 1)
+				{
+					echo '<script language="javascript">
+							alert("Thêm sản phẩm thành công");
+						</script>';
+					
+					echo '<script language="javascript">
+							window.location = "../qlsp/";
+						</script>';
+				}
+				else
+				{
+					echo 'Thêm ko thành công';
+				}
+			}
+			else
+			{
+				echo 'Upload hình ko thành công';
+			}
+		}
+		else
+		{
+			echo 'Yêu cầu upload file hình ảnh .jpg.';
+		}
+	}   
+
+	// Sửa sp
+	if(isset($_POST['nut2']))
+	{
+		$idsua = $_REQUEST['txtidxoa'];
+		$ten = $_REQUEST['txtten'];
+		$gia = $_REQUEST['txtgia'];
+		$mota = $_REQUEST['txtmota'];
+		$congty = $_REQUEST['congty'];
+		if($idsua > 0)
+		{
+				if($p->themxoasua("update sanpham set tensp='$ten', gia='$gia', mota='$mota', id_cty='$congty' where id='$idsua' limit 1")==1)
+				{
+					echo '<script language="javascript">
+							alert("Sửa sản phẩm thành công");
+						</script>';
+					
+					echo '<script language="javascript">
+							window.location = "../qlsp/";
+						</script>';
+				}
+				else
+				{
+					echo 'Sửa ko thành công';
+				}
+		}
+		else
+		{
+			echo 'Vui lòng chọn sản phẩm cần sửa';
+		}
+	}
+
+	// Xóa sp
+	if(isset($_POST['nut3']))
+	{
+		$idxoa = $_REQUEST['txtidxoa'];
+		if($idxoa > 0)
+		{
+			$hinh = $p->laycot("select hinh from sanpham where id = '$idxoa' limit 1");
+			$vitri = "../../hinh/".$hinh;
+			if(unlink($vitri))
+			{
+				if($p->themxoasua("delete from sanpham where id = '$idxoa' limit 1") == 1)
+				{
+					echo '<script language="javascript">
+							alert("Xóa sản phẩm thành công");
+						</script>';
+					
+					echo '<script language="javascript">
+							window.location = "../qlsp/";
+						</script>';
+				}
+				else
+				{
+					echo 'Xóa sản phẩm ko thành công';
+				}
+			}
+			else
+			{
+				echo 'Xóa hình ko thành công';
+			}
+		}
+		else
+		{
+			echo 'Vui lòng chọn sản phẩm cần xóa';
+		}
+	}
   ?>
 </form>
 </body>

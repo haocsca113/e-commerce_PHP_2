@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../class/clslogin.php");
 $p = new login();
 ?>
@@ -41,7 +42,7 @@ $p = new login();
 <div class="container" style="margin-bottom: 10px;">
   <div class="row">
     <div class="col-md-6">
-        <form id="form1" name="form1" method="post" action="">
+        <form id="form1" name="form1" method="POST" action="">
         <table width="600" border="1" align="center" cellpadding="5" cellspacing="0">
           <tr>
             <td colspan="2" align="center" valign="middle"><strong>ĐĂNG NHẬP</strong></td>
@@ -58,38 +59,37 @@ $p = new login();
           </tr>
           <tr>
             <td colspan="2" align="center" valign="middle">
-              <input type="submit" name="nut" id="nut" value="Đăng nhập" />
-              <input type="submit" name="nut" id="nut" value="Đăng ký" />
+              <!-- <input type="submit" name="nut" id="nut" value="Đăng nhập" />
+              <input type="submit" name="nut" id="nut" value="Đăng ký" /> -->
+
+              <input type="submit" name="nut1" id="nut" value="Đăng nhập" />
+              <input type="submit" name="nut2" id="nut" value="Đăng ký" />
             </td>
           </tr>
         </table>
         
         <div align="center">
-        <?php
-        switch($_POST['nut'])
-        {
-          case 'Đăng nhập':
-          {
-            $user = $_REQUEST['txtuser'];
-            $pass = $_REQUEST['txtpass'];
-            if($user != '' && $pass != '')
+          <?php
+            if(isset($_POST['nut1']))
             {
-              $p->mylogin($user, $pass);
+              $user = $_REQUEST['txtuser'];
+              $pass = $_REQUEST['txtpass'];
+              if($user != '' && $pass != '')
+              {
+                $p->mylogin($user, $pass);
+              }
+              else
+              {
+                echo 'Vui lòng nhập đầy đủ thông tin';
+              }
             }
-            else
+            else if(isset($_POST['nut2']))
             {
-              echo 'Vui lòng nhập đầy đủ thông tin';
+              echo '<script language="javascript">
+                        window.location = "../signup/";
+                    </script>';
             }
-            break;
-          }
-
-          case 'Đăng ký':
-            {
-              header("Location: ../signup/");
-              break;
-            }
-        }
-        ?>
+          ?>
         </div>
     </form>
     </div>

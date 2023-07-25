@@ -5,13 +5,13 @@ class admin extends tmdt
 	public function loadcombo_congty($sql, $idcongty)
 	{
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		if($i > 0)
 		{
 			echo '<select name="congty" id="congty">
           			<option>chọn công ty</option>';
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
 				$id = $row['id'];
 				$tencty = $row['tencty'];
@@ -32,7 +32,7 @@ class admin extends tmdt
 		{
 			echo 'Không có cơ sở dữ liệu';
 		}
-		mysql_close($link);
+		mysqli_close($link);
 	}
 	
 	public function uphinh($name, $folder, $tmp_name)
@@ -58,7 +58,7 @@ class admin extends tmdt
 	public function themxoasua($sql)
 	{
 		$link = $this->connect();
-		if(mysql_query($sql, $link))
+		if(mysqli_query($link, $sql))
 		{
 			return 1;
 		}
@@ -71,8 +71,8 @@ class admin extends tmdt
 	public function load_ds_sanpham($sql)
 	{
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		if($i > 0)
 		{
 			echo '<form id="form1" name="form1" method="post" action="">
@@ -84,7 +84,7 @@ class admin extends tmdt
 					  <td width="282" align="center" valign="middle"><strong>MÔ TẢ</strong></td>
 					</tr>';
 			$dem = 1;
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
 				$id = $row['id'];
 				$tensp = $row['tensp'];
@@ -106,18 +106,18 @@ class admin extends tmdt
 		{
 			echo 'Không có cơ sở dữ liệu';
 		}
-		mysql_close($link);
+		mysqli_close($link);
 	}
 	
 	public function laycot($sql)
 	{
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		$giatri = '';
 		if($i > 0)
 		{
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
 				$giatri = $row[0];
 			}	
@@ -125,65 +125,12 @@ class admin extends tmdt
 		return $giatri;
 	}
 
-	// public function xuatdonhang($sql)
-	// {
-	// 	$link = $this->connect();
-	// 	$ketqua = mysql_query($sql, $link);
-	// 	$i = mysql_num_rows($ketqua);
-	// 	if($i > 0)
-	// 	{
-	// 		echo '<thead>
-	// 				<tr>
-	// 				<th>Order ID</th>
-	// 				<th>Status</th>
-	// 				<th>Họ Tên</th>
-	// 				<th>Địa chỉ</th>
-	// 				<th>Hình thức giao hàng</th>
-	// 				</tr>
-	// 			</thead>
-	// 			<tbody>';
-	// 		while($row = mysql_fetch_array($ketqua))
-	// 		{
-				
-	// 			$id = $row['id'];
-	// 			$hoten = $row['hoten'];
-	// 			$diachi = $row['diachi'];
-	// 			$giaohang = $row['giaohang'];
-	// 			$id_taikhoan = $row['id_taikhoan'];
-				
-	// 			if($giaohang == 1)
-	// 			{
-	// 				$giaohang = 'Thanh toán khi nhận hàng';
-	// 			}
-	// 			else
-	// 			{
-	// 				$giaohang = 'Thanh toán online';
-	// 			}
-
-	// 			echo '<tr>
-	// 				<td><a href="pages/examples/invoice.php?id_donhang='.$id.'&id_taikhoan='.$id_taikhoan.'">'.$id.'</a></td>
-	// 				<td><span class="label label-info">Processing</span></td>
-	// 				<td>'.$hoten.'</td>
-	// 				<td>'.$diachi.'</td>
-	// 				<td>'.$giaohang.'</td>
-	// 				</tr>';
-	// 		}
-
-	// 		echo '</tbody>';
-	// 	}
-	// 	else
-	// 	{
-	// 		echo 'Chưa có đơn hàng nào!';
-	// 	}
-
-	// 	mysql_close();
-	// }
-
+	
 	public function xuatdonhang($sql)
 	{
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		if($i > 0)
 		{
 			echo '<thead>
@@ -196,7 +143,7 @@ class admin extends tmdt
 					</tr>
 				</thead>
 				<tbody>';
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
 				
 				$id = $row['id'];
@@ -245,15 +192,15 @@ class admin extends tmdt
 			echo 'Chưa có đơn hàng nào!';
 		}
 
-		mysql_close();
+		mysqli_close($link);
 	}
 
 	// Xuat gio hang cua tung user
 	public function xuatgiohangofuser($sql)
 	{
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		if($i > 0)
 		{
 			echo '<thead>
@@ -265,7 +212,7 @@ class admin extends tmdt
 					</tr>
 				</thead>
 				<tbody>';
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
 				$id = $row['id'];
 				$tensp = $row['tensp'];
@@ -288,7 +235,7 @@ class admin extends tmdt
 			echo 'Không có sản phẩm';
 		}
 
-		mysql_close();
+		mysqli_close($link);
 	}
 }
 ?>

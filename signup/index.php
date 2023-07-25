@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../class/clsadmin.php");
 $p = new admin();
 ?>
@@ -74,30 +75,52 @@ $p = new admin();
             </form>
 
             <?php
-                switch($_POST['nut'])
-                {
-                    case 'Đăng ký':
-                    {
-                        $ho = $_REQUEST['txtho'];
-                        $ten = $_REQUEST['txtten'];
-                        $username = $_REQUEST['txtuser'];
-                        $password = $_REQUEST['txtpass'];
-                        $password = md5($password);
+                // switch($_POST['nut'])
+                // {
+                //     case 'Đăng ký':
+                //     {
+                //         $ho = $_REQUEST['txtho'];
+                //         $ten = $_REQUEST['txtten'];
+                //         $username = $_REQUEST['txtuser'];
+                //         $password = $_REQUEST['txtpass'];
+                //         $password = md5($password);
                         
-                        if($ho == '' || $ten == '' || $username == '' || $password == '')
-                        {
-                            echo 'Vui lòng nhập đầy đủ thông tin';
-                        }
-                        else
-                        {
-                            echo '<script language="javascript">
-                                    alert("Đăng ký thành công");
-                                </script>';
-                            $p->themxoasua("insert into taikhoan(username, password, hodem, ten, phanquyen) values('$username', '$password', '$ho', '$ten', '2')");
+                //         if($ho == '' || $ten == '' || $username == '' || $password == '')
+                //         {
+                //             echo 'Vui lòng nhập đầy đủ thông tin';
+                //         }
+                //         else
+                //         {
+                //             echo '<script language="javascript">
+                //                     alert("Đăng ký thành công");
+                //                 </script>';
+                //             $p->themxoasua("insert into taikhoan(username, password, hodem, ten, phanquyen) values('$username', '$password', '$ho', '$ten', '2')");
                             
-                        }
-                        break;
+                //         }
+                //         break;
+                //     }
+                // }
+
+                if(isset($_POST['nut']))
+                {
+                    $ho = $_REQUEST['txtho'];
+                    $ten = $_REQUEST['txtten'];
+                    $username = $_REQUEST['txtuser'];
+                    $password = $_REQUEST['txtpass'];
+                    $password = md5($password);
+                    
+                    if($ho == '' || $ten == '' || $username == '' || $password == '')
+                    {
+                        echo 'Vui lòng nhập đầy đủ thông tin';
                     }
+                    else
+                    {
+                        echo '<script language="javascript">
+                                alert("Đăng ký thành công");
+                            </script>';
+                        $p->themxoasua("insert into taikhoan(username, password, hodem, ten, phanquyen) values('$username', '$password', '$ho', '$ten', '2')");
+                        
+                    }   
                 }
                 
             ?>

@@ -1,29 +1,21 @@
 <?php 
+session_start();
 include ("class/clstmdt.php");
 $p = new tmdt();
-?>
 
-<?php
-session_start();
-
-$id = $_SESSION['id'];
-$username = $_SESSION['user'];
-$password = $_SESSION['pass'];
-$phanquyen = $_SESSION['phanquyen'];
-$hodem = $_SESSION['hodem'];
-$ten = $_SESSION['ten'];
-if(isset($_SESSION['id']) && isset($_SESSION['user']) && isset($_SESSION['pass']) && isset($_SESSION['phanquyen']) && isset($_SESSION['hodem']) && isset($_SESSION['ten']))
-{
-  echo '<script language="javascript">
-        alert("Hi '.$ten.' '.$hodem.'!");
-      </script>';
-}
+// if(isset($_SESSION['id']) && isset($_SESSION['hodem']) && isset($_SESSION['ten']))
+// {
+//   $hodem = $_SESSION['hodem'];
+//   $ten = $_SESSION['ten'];
+//   echo '<script language="javascript">
+//     alert("Hi '.$ten.' '.$hodem.'!");
+//   </script>';
+// }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Tieu Long Lanh Kute -->
 <!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
@@ -227,7 +219,15 @@ if(isset($_SESSION['id']) && isset($_SESSION['user']) && isset($_SESSION['pass']
         <div class="row">
               <h2 style="text-align: center;">DANH SÁCH SẢN PHẨM</h2>
               <?php 
-              $idcty = $_REQUEST['idcty'];
+              if(isset($_REQUEST['idcty']))
+              {
+                $idcty = $_REQUEST['idcty'];
+              }
+              else
+              {
+                $idcty = 0;
+              }
+              
               if($idcty > 0)
               {
                 $p->xuatsanpham("select * from sanpham where id_cty='$idcty' order by id asc");

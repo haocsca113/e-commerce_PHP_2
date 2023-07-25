@@ -1,9 +1,25 @@
 <?php
 class login
 {
-	private function connect()
+	// private function connect()
+	// {
+	// 	$conn = mysql_connect("localhost", "id20901309_tmdt", "Vualaptrinh@01");
+	// 	if(!$conn)
+	// 	{
+	// 		echo 'Khong ket noi dc csdl';
+	// 		exit();
+	// 	}
+	// 	else
+	// 	{
+	// 		mysql_select_db("id20901309_btl_ptudw_team");
+	// 		mysql_query("SET NAMES UTF8");
+	// 		return $conn;
+	// 	}
+	// }
+
+	public function connect()
 	{
-		$conn = mysql_connect("localhost", "tmdt", "123456");
+		$conn = mysqli_connect("localhost", "tmdt", "123456", "btl_ptudw_team");
 		if(!$conn)
 		{
 			echo 'Khong ket noi dc csdl';
@@ -11,8 +27,7 @@ class login
 		}
 		else
 		{
-			mysql_select_db("btl_ptudw_team");
-			mysql_query("SET NAMES UTF8");
+			mysqli_set_charset($conn,"utf8");
 			return $conn;
 		}
 	}
@@ -22,12 +37,12 @@ class login
 		$pass = md5($pass);
 		$sql = "select * from taikhoan where username='$user' and password='$pass' limit 1";
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		
 		if($i == 1)
 		{
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
 				$id = $row['id'];
 				$username = $row['username'];
@@ -47,12 +62,18 @@ class login
 				
 				if($phanquyen == 1)
 				{
-					header("Location: ../admin/");
+					// header("Location: ../admin/");
+					echo '<script language="javascript">
+						window.location = "../admin/";
+					</script>';
 				}
-				else
+				
+				else if($phanquyen == 2)
 				{
 					header("Location: ../index.php");
-					
+					// echo '<script language="javascript">
+					// 	window.location = "../index.php";
+					// </script>';
 				}
 				
 			}
@@ -68,8 +89,8 @@ class login
 	{
 		$sql = "select id from taikhoan where id='$id' and username='$user' and password='$pass' and phanquyen='$phanquyen'";
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		if($i != 1)
 		{
 			header("Location: ../login/");	

@@ -1,9 +1,26 @@
 <?php
+// session_start();
 class tmdt
 {
+	// public function connect()
+	// {
+	// 	$conn = mysql_connect("localhost", "id20901309_tmdt", "Vualaptrinh@01");
+	// 	if(!$conn)
+	// 	{
+	// 		echo 'Khong ket noi dc csdl';
+	// 		exit();
+	// 	}
+	// 	else
+	// 	{
+	// 		mysql_select_db("id20901309_btl_ptudw_team");
+	// 		mysql_query("SET NAMES UTF8");
+	// 		return $conn;
+	// 	}
+	// }
+
 	public function connect()
 	{
-		$conn = mysql_connect("localhost", "tmdt", "123456");
+		$conn = mysqli_connect("localhost", "tmdt", "123456", "btl_ptudw_team");
 		if(!$conn)
 		{
 			echo 'Khong ket noi dc csdl';
@@ -11,8 +28,7 @@ class tmdt
 		}
 		else
 		{
-			mysql_select_db("btl_ptudw_team");
-			mysql_query("SET NAMES UTF8");
+			mysqli_set_charset($conn,"utf8");
 			return $conn;
 		}
 	}
@@ -20,11 +36,11 @@ class tmdt
 	public function xuatsanpham($sql)
 	{
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		if($i > 0)
 		{
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
 				$id = $row['id'];
 				$tensp = $row['tensp'];
@@ -48,17 +64,17 @@ class tmdt
 		{
 			echo 'Khong co csdl';
 		}
-		mysql_close($link);
+		mysqli_close($link);
 	}
 
     public function xuatchitietsanpham($sql)
 	{
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		if($i > 0)
 		{
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
                 $id = $row['id'];
 				$tensp = $row['tensp'];
@@ -96,12 +112,14 @@ class tmdt
 	public function load_giohang($sql)
 	{
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		$dem = 1;
+		$tongtien = 0;
+
 		if($i > 0)
 		{
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
 				$id = $row['id'];
 				$tensp = $row['tensp'];
@@ -168,17 +186,17 @@ class tmdt
 		{
 			echo 'Chưa có sản phẩm nào được thêm vào giỏ';
 		}
-		mysql_close($link);
+		mysqli_close($link);
 	}
 	
 	public function load_menu_congty($sql)
 	{
 		$link = $this->connect();
-		$ketqua = mysql_query($sql, $link);
-		$i = mysql_num_rows($ketqua);
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
 		if($i > 0)
 		{
-			while($row = mysql_fetch_array($ketqua))
+			while($row = mysqli_fetch_array($ketqua))
 			{
 				$id = $row['id'];
 				$tencty = $row['tencty'];
@@ -190,7 +208,7 @@ class tmdt
 		{
 			echo 'Không có cơ sở dữ liệu';
 		}
-		mysql_close($link);
+		mysqli_close($link);
 	}
 }
 

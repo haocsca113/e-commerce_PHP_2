@@ -1,13 +1,20 @@
 <?php
 session_start();
-$id = $_SESSION['id'];
-$username = $_SESSION['user'];
-$password = $_SESSION['pass'];
-$phanquyen = $_SESSION['phanquyen'];
-$hodem = $_SESSION['hodem'];
-$ten = $_SESSION['ten'];
-// include("../class/clsadmin.php");
-// $p = new admin();
+if(isset($_SESSION['id']) && isset($_SESSION['user']) && isset($_SESSION['pass']) && isset($_SESSION['phanquyen']) && isset($_SESSION['hodem']) && isset($_SESSION['ten']))
+{
+    $id = $_SESSION['id'];
+    $username = $_SESSION['user'];
+    $password = $_SESSION['pass'];
+    $phanquyen = $_SESSION['phanquyen'];
+    $hodem = $_SESSION['hodem'];
+    $ten = $_SESSION['ten'];
+}
+else
+{
+    $username = '';
+    $hodem = '';
+    $ten = '';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

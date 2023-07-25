@@ -94,8 +94,10 @@
                         </label></td>
                         </tr>
                         <tr>
-                        <td colspan="2" align="center" valign="middle"><input type="submit" name="nut" id="nut" value="Đặt hàng" />
-                        <input type="submit" name="nut" id="nut" value="Reset" /></td>
+                        <!-- <td colspan="2" align="center" valign="middle"><input type="submit" name="nut" id="nut" value="Đặt hàng" /> -->
+                        <td colspan="2" align="center" valign="middle"><input type="submit" name="nut1" id="nut1" value="Đặt hàng" />
+
+                        <input type="submit" name="nut2" id="nut2" value="Reset" /></td>
                         </tr>
                     </table>
                 </form>
@@ -103,47 +105,53 @@
                 <!--******************************* CODE PHP Đặt hàng ***********************************-->
                 <?php
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
-                $id_taikhoan = $_SESSION['id'];
+                $id_taikhoan = $_SESSION['id'];              
 
-                switch($_POST['nut'])
+                if(isset($_POST['nut1']))
                 {
-                    case 'Đặt hàng':
-                    {
                         $hoten = $_REQUEST['txthoten'];
                         $diachi = $_REQUEST['txtdiachi'];
                         $SDT = $_REQUEST['txtSDT'];
                         $email = $_REQUEST['txtemail'];
                         $tt = $_REQUEST['txttongtien'];
                         $giaohang = $_REQUEST['giaohang'];
-                        $date = date("y-m-d - H:i:s");
+                        $date = date("y-m-d H:i:s");
 
                         // giaohang == 1 la nhan tien sau khi giao hang
                         if($giaohang == '1')
                         {
-                            $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')");
-                            echo '<script language="javascript">
-                                    alert("Đặt hàng thành công, đơn hàng đang chờ được xác nhận.");
-                                </script>';
+                            if($p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')") == 1)
+                            {
+                                echo '<script language="javascript">
+                                        alert("Đặt hàng thành công, đơn hàng đang chờ được xác nhận.");
+                                    </script>';
 
-                            echo '<script language="javascript">
-                                    window.location = "../index.php";
-                                </script>';
+                                echo '<script language="javascript">
+                                        window.location = "../index.php";
+                                    </script>';
+                            }
+                            else
+                            {
+                                echo 'Thanh toán ko thành công';
+                            }
+                            
                         }
                         // giaohang == 2 la dat hang online
                         else if($giaohang == '2'){
-                            $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')");
-                            header("Location: ../vnpay_php/");
+                            // $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')");
+                            if($p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')") == 1)
+                            {
+                                echo '<script language="javascript">
+                                        window.location = "../vnpay_php/";
+                                    </script>';
+                            }
                         }
-                       
-
-                        break;
-                    }
-
-                    case 'Reset':
-                    {
-                        header("Location: ../thanhtoan/");
-                        break;
-                    }
+                }
+                else if(isset($_POST['nut2']))
+                {
+                    echo '<script language="javascript">
+                            window.location = "../thanhtoan/";
+                        </script>';
                 }
                 ?>
                 <!--****************************** END CODE PHP Đặt hàng **********************************-->

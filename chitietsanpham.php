@@ -203,7 +203,15 @@ $p = new tmdt();
       <div class="container">
         <div class="row">
               <?php 
-                $idcty = $_REQUEST['idcty'];
+                if(isset($_REQUEST['idcty']))
+                {
+                  $idcty = $_REQUEST['idcty'];
+                }
+                else
+                {
+                  $idcty = 0;
+                }
+                
                 if($idcty > 0)
                 {
                     $p->xuatsanpham("select * from sanpham where id_cty='$idcty' order by id asc");
