@@ -70,10 +70,9 @@ class login
 				
 				else if($phanquyen == 2)
 				{
-					header("Location: ../index.php");
-					// echo '<script language="javascript">
-					// 	window.location = "../index.php";
-					// </script>';
+					echo '<script language="javascript">
+						window.location = "../index.php";
+					</script>';
 				}
 				
 			}

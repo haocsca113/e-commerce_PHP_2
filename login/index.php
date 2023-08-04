@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("../class/clslogin.php");
 $p = new login();
 ?>

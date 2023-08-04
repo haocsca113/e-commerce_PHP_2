@@ -1,5 +1,8 @@
 <?php
-session_start();
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
 include("../class/clslogin.php");
 $p = new login();
 if(isset($_SESSION['id']) && isset($_SESSION['user']) && isset($_SESSION['pass']) && isset($_SESSION['phanquyen']))
@@ -8,7 +11,9 @@ if(isset($_SESSION['id']) && isset($_SESSION['user']) && isset($_SESSION['pass']
 }
 else
 {
-	header("Location: ../login/");
+  '<script language="javascript">
+      window.location = "../login/";
+  </script>';
 }
 ?>
 
@@ -21,6 +26,7 @@ $p2 = new admin();
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>AdminLTE 2 | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -581,17 +587,64 @@ $p2 = new admin();
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">
+                <!--************************ CHART PHP ************************* -->
                 <div class="col-md-8">
-                  <p class="text-center">
-                    <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-                  </p>
-
                   <div class="chart">
                     <!-- Sales Chart Canvas -->
-                    <canvas id="salesChart" style="height: 180px;"></canvas>
+                    <canvas id="myChart" style="height: 180px;"></canvas>
                   </div>
+                 
+                  <script>
+                    const labels = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                   
+                    const data = {
+                      labels: labels,
+                      datasets: [{
+                        label: 'Sales Dataset',
+                        data: [65, 59, 80, 81, 56, 55, 40, 10, 100, 200, 25, 50],
+                        data: <?php $p2->xuatBieuDo("select * from donhang"); ?>,
+                        backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)',
+                          'rgba(255, 159, 64, 0.2)',
+                          'rgba(255, 205, 86, 0.2)',
+                          'rgba(75, 192, 192, 0.2)',
+                          'rgba(54, 162, 235, 0.2)',
+                          'rgba(153, 102, 255, 0.2)',
+                          'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                          'rgb(255, 99, 132)',
+                          'rgb(255, 159, 64)',
+                          'rgb(255, 205, 86)',
+                          'rgb(75, 192, 192)',
+                          'rgb(54, 162, 235)',
+                          'rgb(153, 102, 255)',
+                          'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                      }]
+                    };
+
+                    const config = {
+                      type: 'bar',
+                      data: data,
+                      options: {
+                        scales: {
+                          y: {
+                            beginAtZero: true
+                          }
+                        }
+                      },
+                    };
+
+                    var myChart = new Chart(
+                      document.getElementById('myChart'),
+                      config
+                    );
+                  </script>
                   <!-- /.chart-responsive -->
                 </div>
+              <!--************************ END CHART PHP ************************* -->
                 <!-- /.col -->
                 <div class="col-md-4">
                   <p class="text-center">
@@ -639,35 +692,13 @@ $p2 = new admin();
               </div>
               <!-- /.row -->
             </div>
+
             <!-- ./box-body -->
             <div class="box-footer">
               <div class="row">
-                <div class="col-sm-3 col-xs-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
-                    <h5 class="description-header">$35,210.43</h5>
-                    <span class="description-text">TOTAL REVENUE</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-xs-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
-                    <h5 class="description-header">$10,390.90</h5>
-                    <span class="description-text">TOTAL COST</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-xs-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
-                    <h5 class="description-header">$24,813.53</h5>
-                    <span class="description-text">TOTAL PROFIT</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
+                <?php
+                  $p2->xuatthongtindoanhthu("select * from donhang");
+                ?>
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block">

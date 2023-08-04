@@ -237,5 +237,171 @@ class admin extends tmdt
 
 		mysqli_close($link);
 	}
+
+	public function xuatthongtindoanhthu($sql)
+	{
+		$link = $this->connect();
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
+		$tongdoanhthu = 0;
+		$tongchiphi = 300;
+		$loinhuan = 0;
+		if($i > 0)
+		{
+			while($row = mysqli_fetch_array($ketqua))
+			{
+				$id = $row['id'];
+				$tongtien = $row['tongtien'];
+
+				$tongdoanhthu += $tongtien;
+				$loinhuan = $tongdoanhthu - $tongchiphi;
+			}
+		}
+		else
+		{
+			echo 'Không có sản phẩm';
+		}
+
+		echo '<div class="col-sm-3 col-xs-6">
+				<div class="description-block border-right">
+				<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
+				<h5 class="description-header">'.$tongdoanhthu.' $</h5>
+				<span class="description-text">TỔNG DOANH THU</span>
+				</div>
+				<!-- /.description-block -->
+			</div>
+			<!-- /.col -->
+			<div class="col-sm-3 col-xs-6">
+				<div class="description-block border-right">
+				<span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+				<h5 class="description-header">'.$tongchiphi.' $</h5>
+				<span class="description-text">TỔNG CHI PHÍ</span>
+				</div>
+				<!-- /.description-block -->
+			</div>
+			<!-- /.col -->
+			<div class="col-sm-3 col-xs-6">
+				<div class="description-block border-right">
+				<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
+				<h5 class="description-header">'.$loinhuan.' $</h5>
+				<span class="description-text">LỢI NHUẬN</span>
+				</div>
+				<!-- /.description-block -->
+			</div>';
+
+		mysqli_close($link);
+	}
+
+	public function xuatBieuDo($sql)
+	{
+		$link = $this->connect();
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
+		$month;
+		$ttT1 = 0;
+		$ttT2 = 0;
+		$ttT3 = 0;
+		$ttT4 = 0;
+		$ttT5 = 0;
+		$ttT6 = 0;
+		$ttT7 = 0;
+		$ttT8 = 0;
+		$ttT9 = 0;
+		$ttT10 = 0;
+		$ttT11 = 0;
+		$ttT12 = 0;
+		if($i > 0)
+		{
+			while($row = mysqli_fetch_array($ketqua))
+			{
+				$tongtien = $row['tongtien'];
+				$orderdate = $row['order_date'];
+				$month = date("m", strtotime($orderdate));
+				if($month == 1)
+				{
+					$ttT1 += $tongtien;
+				}
+				else if($month == 2)
+				{
+					$ttT2 += $tongtien;
+				}
+				else if($month == 3)
+				{
+					$ttT3 += $tongtien;
+				}
+				else if($month == 4)
+				{
+					$ttT4 += $tongtien;
+				}
+				else if($month == 5)
+				{
+					$ttT5 += $tongtien;
+				}
+				else if($month == 6)
+				{
+					$ttT6 += $tongtien;
+				}
+				else if($month == 7)
+				{
+					$ttT7 += $tongtien;
+				}
+				else if($month == 8)
+				{
+					$ttT8 += $tongtien;
+				}
+				else if($month == 9)
+				{
+					$ttT9 += $tongtien;
+				}
+				else if($month == 10)
+				{
+					$ttT10 += $tongtien;
+				}
+				else if($month == 11)
+				{
+					$ttT11 += $tongtien;
+				}
+				else if($month == 12)
+				{
+					$ttT12 += $tongtien;
+				}
+				
+			}
+			$all = [$ttT1, $ttT2, $ttT3, $ttT4, $ttT5, $ttT6, $ttT7, $ttT8, $ttT9, $ttT10, $ttT11, $ttT12];
+			echo json_encode($all);
+		}
+		else
+		{
+			echo 'Không có sản phẩm';
+		}
+
+		mysqli_close($link);
+	}
+
+	public function xuatBieuDoThang($sql)
+	{
+		$link = $this->connect();
+		$ketqua = mysqli_query($link, $sql);
+		$i = mysqli_num_rows($ketqua);
+		$month;
+		$tt;
+		$ttT6 = 0;
+		if($i > 0)
+		{
+			while($row = mysqli_fetch_array($ketqua))
+			{
+				
+				$orderdate = $row['order_date'];
+				$month[] = date("m", strtotime($orderdate));
+			}
+			echo json_encode($month);
+		}
+		else
+		{
+			echo 'Không có sản phẩm';
+		}
+
+		mysqli_close($link);
+	}
 }
 ?>
