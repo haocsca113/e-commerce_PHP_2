@@ -155,6 +155,7 @@ class tmdt
 					';
 				$dem++;
 				$tongtien = $tongtien + $tonggia;
+				$_SESSION['tongtien'] = $tongtien;
 			}
 			
 			

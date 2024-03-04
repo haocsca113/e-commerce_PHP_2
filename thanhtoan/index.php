@@ -4,10 +4,13 @@
     $p = new admin();
 
     /********************* Lấy tổng tiền từ form giỏ hàng ở trang clstmdt ********************/
-    if(isset($_POST['tienhanhthanhtoan']))
-    {
-        $tongtien = $_REQUEST['tongtien'];
-    }
+    // if(isset($_POST['tienhanhthanhtoan']))
+    // {
+    //     $tongtien = $_REQUEST['tongtien'];
+    // }
+
+    $tongtien = $_SESSION['tongtien'];
+    // $_SESSION['tt_momo'] = $tt_momo;
     /********************* END CODE Lấy tổng tiền từ form giỏ hàng ở trang clstmdt ********************/
     
 ?>
@@ -81,20 +84,40 @@
                         <input type="text" name="txttongtien" id="txttongtien" size="50" value="<?php echo $tongtien .'$' ?>"/></td>
                         </tr>
                         <tr>
-                        <td>Hình thức thanh toán:</td>
-                        <td>
-                        <label>
-                        <input type="radio" name="giaohang" value="1" id="giaohang" />
-                        Thanh toán khi nhận hàng</label>
-                        <br />
-                        <label>
-                        <input type="radio" name="giaohang" value="2" id="giaohang" />
-                        Thanh toán online</label>
-                        <label for="radio">
-                        </label></td>
+                            <td>Hình thức thanh toán:</td>
+                            <td>
+                                <label>
+                                    <input type="radio" name="giaohang" value="1" id="giaohang" />
+                                    Thanh toán khi nhận hàng
+                                </label>
+                                <br />
+                                <label>
+                                    <input type="radio" name="giaohang" value="2" id="giaohang" />
+                                    Thanh toán VNPAY
+                                </label>
+                                <!-- <br /> -->
+                                <!-- <label>
+                                    <input type="radio" name="giaohang" value="3" id="giaohang" />
+                                    Thanh toán MOMO
+                                </label> -->
+                                <label for="radio"></label>
+
+                                <br>
+                                <label for="">
+                                    <input type="submit" name="momo_qr" value="Thanh toán MOMO QRcode" class="btn btn-danger" onclick="javascript: form.method='post'; form.action='../thanhtoan_momo/' ">
+                                    
+                                    <input type="hidden" value="<?php echo $tongtien ?>" name="tongtien_momo"> 
+                                </label>
+
+                                <br>
+                                <label for="">
+                                    <input type="submit" name="momo_atm" value="Thanh toán MOMO ATM" class="btn btn-danger" onclick="javascript: form.action='../thanhtoan_momo_atm/' ">
+                        
+                                    <input type="hidden" value="<?php echo $tongtien ?>" name="tongtien_momo">  
+                                </label>
+                            </td>
                         </tr>
                         <tr>
-                        <!-- <td colspan="2" align="center" valign="middle"><input type="submit" name="nut" id="nut" value="Đặt hàng" /> -->
                         <td colspan="2" align="center" valign="middle"><input type="submit" name="nut1" id="nut1" value="Đặt hàng" />
 
                         <input type="submit" name="nut2" id="nut2" value="Reset" /></td>
@@ -102,10 +125,50 @@
                     </table>
                 </form>
 
-                <!--******************************* CODE PHP Đặt hàng ***********************************-->
+                <!-- <br>
+                <form method="post" enctype="application/x-www-form-urlencoded" action="../thanhtoan_momo/">
+                    <input type="submit" name="momo_qr" value="Thanh toán MOMO QRcode" class="btn btn-danger">
+                </form>
+
+                <br>
+                <form method="post" enctype="application/x-www-form-urlencoded" action="../thanhtoan_momo_atm/">
+                    
+                    <input type="submit" name="momo_atm" value="Thanh toán MOMO ATM" class="btn btn-danger">
+                </form> -->
+
+                <!-- ******************************* CODE PHP Đặt hàng *********************************** -->
                 <?php
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
-                $id_taikhoan = $_SESSION['id'];              
+                $id_taikhoan = $_SESSION['id'];  
+                
+                if(isset($_POST['momo_qr']))
+                {
+                    $hoten = $_REQUEST['txthoten'];
+                    $diachi = $_REQUEST['txtdiachi'];
+                    $SDT = $_REQUEST['txtSDT'];
+                    $email = $_REQUEST['txtemail'];
+                    $tt = $_REQUEST['txttongtien'];
+                    $giaohang = 'momo_qr';
+                    $date = date("y-m-d H:i:s");
+
+                    
+
+                    $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')");
+                }
+                
+                if(isset($_POST['momo_atm']))
+                {
+                    $hoten = $_REQUEST['txthoten'];
+                    $diachi = $_REQUEST['txtdiachi'];
+                    $SDT = $_REQUEST['txtSDT'];
+                    $email = $_REQUEST['txtemail'];
+                    $tt = $_REQUEST['txttongtien'];
+                    $giaohang = 'momo_atm';
+                    $date = date("y-m-d H:i:s");
+                    
+
+                    $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')");
+                }
 
                 if(isset($_POST['nut1']))
                 {
@@ -120,6 +183,7 @@
                         // giaohang == 1 la nhan tien sau khi giao hang
                         if($giaohang == '1')
                         {
+                            
                             if($p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')") == 1)
                             {
                                 echo '<script language="javascript">
@@ -132,13 +196,12 @@
                             }
                             else
                             {
-                                echo 'Thanh toán ko thành công';
+                                echo 'Đặt hàng không thành công';
                             }
                             
                         }
-                        // giaohang == 2 la dat hang online
+                        // giaohang == 2 la dat hang online vnpay
                         else if($giaohang == '2'){
-                            // $p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')");
                             if($p->themxoasua("insert into donhang(hoten, diachi, SDT, email, tongtien, giaohang, status, order_date, id_taikhoan) values('$hoten', '$diachi', '$SDT', '$email', '$tt', '$giaohang', '1', '$date', '$id_taikhoan')") == 1)
                             {
                                 echo '<script language="javascript">
@@ -154,7 +217,7 @@
                         </script>';
                 }
                 ?>
-                <!--****************************** END CODE PHP Đặt hàng **********************************-->
+                <!-- ****************************** END CODE PHP Đặt hàng ********************************** -->
 
             </div>
         </div>
